@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model pelanggan {
+  PelangganID   Int         @id @default(autoincrement())
+  NamaPelanggan String      @db.VarChar(255)
+  Alamat        String      @db.Text
+  NomorTelepon  String      @db.VarChar(15)
+  pembelian     pembelian[]
+  penjualan     penjualan[]
+}
+
+model produk {
+  ProdukID        Int               @id @default(autoincrement())
+  NamaProduk      String            @db.VarChar(255)
+  Harga           Decimal           @db.Decimal(10, 2)
+  Stok            Int
+  detailpembelian detailpembelian[]
+  detailpenjualan detailpenjualan[]
+}
+
+model penjualan {
+  PenjualanID      Int               @id @default(autoincrement())
+  TanggalPenjualan DateTime
+  TotalHarga       Decimal           @db.Decimal(10, 2)
+  PelangganID      Int
+  detailpenjualan  detailpenjualan[]
+  pelanggan        pelanggan         @relation(fields: [PelangganID], references: [PelangganID], map: "Penjualan_PelangganID_fkey")
+
+  @@index([PelangganID], map: "Penjualan_PelangganID_fkey")
+}
+
+model detailpenjualan {
+  DetailID     Int       @id @default(autoincrement())
+  PenjualanID  Int
+  ProdukID     Int
+  JumlahProduk Int
+  Subtotal     Decimal   @db.Decimal(10, 2)
+  penjualan    penjualan @relation(fields: [PenjualanID], references: [PenjualanID], map: "DetailPenjualan_PenjualanID_fkey")
+  produk       produk    @relation(fields: [ProdukID], references: [ProdukID], map: "DetailPenjualan_ProdukID_fkey")
+
+  @@index([PenjualanID], map: "DetailPenjualan_PenjualanID_fkey")
+  @@index([ProdukID], map: "DetailPenjualan_ProdukID_fkey")
+}
+
+model pembelian {
+  pembelianID      Int               @id @default(autoincrement())
+  Tanggalpembelian DateTime
+  TotalHarga       Decimal           @db.Decimal(10, 2)
+  PelangganID      Int
+  detailpembelian  detailpembelian[]
+  pelanggan        pelanggan         @relation(fields: [PelangganID], references: [PelangganID], map: "pembelian_PelangganID_fkey")
+
+  @@index([PelangganID], map: "pembelian_PelangganID_fkey")
+}
+
+model detailpembelian {
+  DetailID     Int       @id @default(autoincrement())
+  pembelianID  Int
+  ProdukID     Int
+  JumlahProduk Int
+  Subtotal     Decimal   @db.Decimal(10, 2)
+  produk       produk    @relation(fields: [ProdukID], references: [ProdukID], map: "Detailpembelian_ProdukID_fkey")
+  pembelian    pembelian @relation(fields: [pembelianID], references: [pembelianID], map: "Detailpembelian_pembelianID_fkey")
+
+  @@index([pembelianID], map: "DetailPembelian_PembelianID_fkey")
+  @@index([ProdukID], map: "DetailPembelian_ProdukID_fkey")
+}
+
+model user {
+  user_id      Int       @id @default(autoincrement())
+  username     String    @db.Char(25)
+  email        String    @unique(map: "uniq email") @db.Char(25)
+  password     String    @db.VarChar(255)
+  role         user_role @default(user)
+  refreshtoken String    @db.Text
+}
+
+enum user_role {
+  user
+  kasir
+  admin
+}

@@ -1,0 +1,379 @@
+{
+	"info": {
+		"_postman_id": "fb39e3c0-79c1-477c-b7fb-10668ddc174c",
+		"name": "Kasir & Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "40033548"
+	},
+	"item": [
+		{
+			"name": "Create Produk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"namaProduk\": \"Produk B\",\r\n  \"harga\": 100000,\r\n  \"stok\": 50\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/produk"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Produk",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/produk"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Produk by ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/produk/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Produk",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"NamaProduk\": \"Produk A\",\r\n  \"Harga\": 100000,\r\n  \"Stok\": 50\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/produk/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Produk",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/produk/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pelanggan",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"namaPelanggan\": \"John Doe\",\r\n  \"alamat\": \"Jl. Mawar No. 5\",\r\n  \"nomorTelepon\": \"081234567890\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/pelanggan"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Pelanggan",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/pelanggan"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pelanggan By ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/pelanggan/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pelanggan",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"namaPelanggan\": \"John Do\",\r\n  \"alamat\": \"Jl. Mawar No. 5\",\r\n  \"nomorTelepon\": \"081234567890\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/pelanggan/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pelanggan",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/pelanggan/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Penjualan",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"TanggalPenjualan\": \"2024-12-04T12:00:00\",\r\n  \"TotalHarga\": 500000,\r\n  \"pelangganID\": 2,\r\n  \"detailPenjualan\": [\r\n    {\r\n      \"ProdukID\": 1,\r\n      \"JumlahProduk\": 2,\r\n      \"Subtotal\": 200000\r\n    },\r\n    {\r\n      \"ProdukID\": 2,\r\n      \"JumlahProduk\": 3,\r\n      \"Subtotal\": 300000\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/penjualan"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Penjualan",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/penjualan"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Penjualan By ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/penjualan/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Penjualan",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"TanggalPenjualan\": \"2024-12-04T12:00:00\",\r\n  \"TotalHarga\": 500000,\r\n  \"pelangganID\": 2,\r\n  \"detailPenjualan\": [\r\n    {\r\n      \"ProdukID\": 1,\r\n      \"JumlahProduk\": 2,\r\n      \"Subtotal\": 200000\r\n    },\r\n    {\r\n      \"ProdukID\": 2,\r\n      \"JumlahProduk\": 3,\r\n      \"Subtotal\": 300000\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/penjualan/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pembelian",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"TanggalPenjualan\": \"2024-12-04T12:00:00\",\r\n  \"TotalHarga\": 500000,\r\n  \"pelangganID\": 2,\r\n  \"detailPembelian\": [\r\n    {\r\n      \"ProdukID\": 1,\r\n      \"JumlahProduk\": 2,\r\n      \"Subtotal\": 200000\r\n    },\r\n    {\r\n      \"ProdukID\": 2,\r\n      \"JumlahProduk\": 3,\r\n      \"Subtotal\": 300000\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/pembelian"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Pembelian",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/pembelian"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pembelian By ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/pembelian/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pembelian",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"TanggalPenjualan\": \"2024-12-04T12:00:00\",\r\n  \"TotalHarga\": 500000,\r\n  \"pelangganID\": 2,\r\n  \"detailPembelian\": [\r\n    {\r\n      \"ProdukID\": 1,\r\n      \"JumlahProduk\": 2,\r\n      \"Subtotal\": 200000\r\n    },\r\n    {\r\n      \"ProdukID\": 2,\r\n      \"JumlahProduk\": 3,\r\n      \"Subtotal\": 300000\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/pembelian/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Statistik",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3030/api/statistik"
+			},
+			"response": []
+		}
+	]
+}

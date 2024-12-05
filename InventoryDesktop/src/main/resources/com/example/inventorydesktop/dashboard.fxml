@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<AnchorPane prefHeight="834.0" prefWidth="1366.0" style="-fx-background-color: #EEEEEE;" stylesheets="@../../../css/main-styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventorydesktop.MainController">
+    <Pane layoutX="6.0" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #EEEEEE;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="0.0">
+
+        <!-- Header Section -->
+        <HBox layoutX="62.0" layoutY="48.0" spacing="20.0">
+            <children>
+                <ImageView fitHeight="55.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true" styleClass="rounded-image">
+                    <image>
+                        <Image url="https://i.pinimg.com/736x/5f/40/6a/5f406ab25e8942cbe0da6485afd26b71.jpg" />
+                    </image>
+                </ImageView>
+                <VBox>
+                    <children>
+                        <Text fx:id="contentText" styleClass="content-text" text="Welcome, christo" />
+                        <Text fx:id="contentText1" styleClass="date-text" text="Monday, 23 November" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+
+        <!-- Stats Section -->
+        <HBox layoutX="62.0" layoutY="143.0" spacing="20.0">
+            <children>
+                <!-- Product In Stats -->
+                <Pane prefHeight="104.0" prefWidth="295.0" style="-fx-background-color: white; -fx-background-radius: 15px;">
+                    <children>
+                        <Text fill="#616161" layoutX="20.0" layoutY="29.0" text="Product in per week">
+                            <font>
+                                <Font name="Arial" size="18.0" />
+                            </font>
+                        </Text>
+                        <Pane layoutX="234.0" layoutY="30.0" prefHeight="48.0" prefWidth="47.0" style="-fx-background-color: black; -fx-background-radius: 15px;">
+                            <children>
+                                <FontIcon iconColor="WHITE" iconLiteral="mdi-package-up" iconSize="25" layoutX="11.0" layoutY="33.0" />
+                            </children>
+                        </Pane>
+                        <Text layoutX="20.0" layoutY="62.0" text="110 Product">
+                            <font>
+                                <Font name="Arial Bold" size="22.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </Pane>
+
+                <!-- Product Out Stats -->
+                <Pane prefHeight="104.0" prefWidth="295.0" style="-fx-background-color: white; -fx-background-radius: 15px;">
+                    <children>
+                        <Text fill="#616161" layoutX="20.0" layoutY="29.0" text="Product out per week">
+                            <font>
+                                <Font name="Arial" size="18.0" />
+                            </font>
+                        </Text>
+                        <Pane layoutX="234.0" layoutY="30.0" prefHeight="48.0" prefWidth="47.0" style="-fx-background-color: black; -fx-background-radius: 15px;">
+                            <children>
+                                <FontIcon iconColor="WHITE" iconLiteral="mdi-package-down" iconSize="25" layoutX="11.0" layoutY="33.0" />
+                            </children>
+                        </Pane>
+                        <Text layoutX="20.0" layoutY="62.0" text="110 Product">
+                            <font>
+                                <Font name="Arial Bold" size="22.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </Pane>
+
+                <!-- Total User Stats -->
+                <Pane prefHeight="104.0" prefWidth="295.0" style="-fx-background-color: white; -fx-background-radius: 15px;">
+                    <children>
+                        <Text fill="#616161" layoutX="20.0" layoutY="29.0" text="Total User">
+                            <font>
+                                <Font name="Arial" size="18.0" />
+                            </font>
+                        </Text>
+                        <Pane layoutX="234.0" layoutY="30.0" prefHeight="48.0" prefWidth="47.0" style="-fx-background-color: black; -fx-background-radius: 15px;">
+                            <children>
+                                <FontIcon iconColor="WHITE" iconLiteral="mdi-account" iconSize="25" layoutX="11.0" layoutY="33.0" />
+                            </children>
+                        </Pane>
+                        <Text layoutX="20.0" layoutY="62.0" text="110 User">
+                            <font>
+                                <Font name="Arial Bold" size="22.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </Pane>
+            </children>
+        </HBox>
+
+        <!-- Date Filter Section -->
+        <VBox layoutX="381.0" layoutY="48.0" spacing="10.0">
+            <Text styleClass="content-text" text="Filter by Date" />
+            <DatePicker fx:id="datePicker" prefHeight="30.0" prefWidth="174.0" promptText="Select a date" style="-fx-background-color: white; -fx-background-radius: 5px;" />
+        </VBox>
+
+        <!-- Chart Section -->
+        <Pane layoutX="62.0" layoutY="275.0" prefHeight="489.0" prefWidth="1088.0">
+            <children>
+                <AreaChart prefHeight="475.0" prefWidth="1088.0">
+                    <xAxis>
+                        <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT" />
+                    </yAxis>
+                </AreaChart>
+            </children>
+        </Pane>
+    </Pane>
+</AnchorPane>

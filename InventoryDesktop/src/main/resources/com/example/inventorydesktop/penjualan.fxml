@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventorydesktop.PenjualanController">
+    <Pane layoutX="50.0" layoutY="100.0" prefHeight="768.0" prefWidth="1366.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="0.0">
+        <Text fx:id="contentText" layoutX="69.0" layoutY="75.0" styleClass="content-text" text="Data Penjualan list" />
+        <Text fx:id="contentText1" layoutX="69.0" layoutY="98.0" styleClass="date-text" text="List of data penjualan" />
+
+        <TableView fx:id="tableView" layoutX="62.0" layoutY="147.0" prefHeight="500.0" prefWidth="931.0">
+            <columns>
+                <TableColumn fx:id="colPenjualanID" text="Penjualan ID" />
+                <TableColumn fx:id="colTanggal" text="Tanggal" />
+                <TableColumn fx:id="colTotalHarga" text="Total Harga" />
+                <TableColumn fx:id="colPelanggan" text="Pelanggan" />
+            </columns>
+        </TableView>
+    </Pane>
+</AnchorPane>

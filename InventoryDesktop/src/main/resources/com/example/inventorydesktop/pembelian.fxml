@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.TableCell?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1366.0" stylesheets="@../../../css/main-styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventorydesktop.PembelianController">
+    <Pane prefHeight="768.0" prefWidth="1366.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+        <!-- Title -->
+        <Text fx:id="contentText" layoutX="69.0" layoutY="75.0" styleClass="content-text" text="Manage Pembelian" AnchorPane.leftAnchor="69.0" AnchorPane.topAnchor="49.1015625" />
+        <Text fx:id="contentText1" layoutX="69.0" layoutY="98.0" styleClass="date-text" text="Monday, 23 November" />
+
+        <!-- TableView for Pembelian -->
+        <TableView fx:id="tableView" layoutX="62.0" layoutY="147.0" prefHeight="400.0" prefWidth="1240.0">
+            <TableColumn fx:id="columnID" text="ID Pembelian" prefWidth="100.0">
+                <cellValueFactory>
+                    <PropertyValueFactory property="pembelianID" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="columnDate" text="Tanggal Pembelian" prefWidth="250.0">
+                <cellValueFactory>
+                    <PropertyValueFactory property="tanggalPembelian" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="columnTotalPrice" text="Total Harga" prefWidth="150.0">
+                <cellValueFactory>
+                    <PropertyValueFactory property="totalHarga" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="columnCustomerName" text="Nama Pelanggan" prefWidth="300.0">
+                <cellValueFactory>
+                    <PropertyValueFactory property="pelanggan" />
+                </cellValueFactory>
+            </TableColumn>
+
+        </TableView>
+
+        <!-- Add Pembelian Button -->
+        <Button fx:id="btnAdd" text="Tambah Pembelian" layoutX="62.0" layoutY="570.0" prefWidth="200.0" onAction="#showAddModal" />
+
+        <!-- Panel for detail Pembelian (optional for future use) -->
+        <Pane layoutX="62.0" layoutY="620.0" prefHeight="100.0" prefWidth="1240.0">
+            <Text text="Detail Pembelian" layoutX="10.0" layoutY="20.0" />
+            <!-- This part can be extended with a detail view, modal, or additional controls -->
+        </Pane>
+
+    </Pane>
+</AnchorPane>
