@@ -1,25 +1,13 @@
 package com.example.inventorydesktop.pembelian;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Produk {
-
-    @SerializedName("ProdukID")
     private int ProdukID;
-
-    @SerializedName("NamaProduk")
     private String NamaProduk;
 
-    public Produk(int produkID, String namaProduk) {
-        this.ProdukID = produkID;
-        this.NamaProduk = namaProduk;
-    }
+    // Getters and setters
+    public int getProdukID() { return ProdukID; }
+    public void setProdukID(int produkID) { this.ProdukID = produkID; }
 
-    public int getProdukID() {
-        return ProdukID;
-    }
-
-    public String getNamaProduk() {
-        return NamaProduk;
-    }
+    public String getNamaProduk() { return NamaProduk; }
+    public void setNamaProduk(String namaProduk) { this.NamaProduk = namaProduk; }
 }

@@ -1,57 +1,35 @@
 package com.example.inventorydesktop.pembelian;
 
-import com.example.inventorydesktop.pembelian.DetailPembelian;
-import com.example.inventorydesktop.pembelian.Pelanggan;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class Pembelian {
     private int pembelianID;
-    private LocalDateTime tanggalPembelian;
-    private Double totalHarga;  // Change from String to Double
-    private List<DetailPembelian> detailPembelian;
+    private String Tanggalpembelian;
+    private String TotalHarga;
     private Pelanggan pelanggan;
+    private List<DetailPembelian> detailpembelian;
 
     // Getters and setters
-    public int getPembelianID() {
-        return pembelianID;
-    }
+    public int getPembelianID() { return pembelianID; }
+    public void setPembelianID(int pembelianID) { this.pembelianID = pembelianID; }
 
-    public void setPembelianID(int pembelianID) {
-        this.pembelianID = pembelianID;
-    }
+    public String getTanggalPembelian() { return Tanggalpembelian; }
+    public void setTanggalPembelian(String tanggalPembelian) { this.Tanggalpembelian = tanggalPembelian; }
 
-    public LocalDateTime getTanggalPembelian() {
-        return tanggalPembelian;
-    }
+    public String getTotalHarga() { return TotalHarga; }
+    public void setTotalHarga(String totalHarga) { this.TotalHarga = totalHarga; }
 
-    public void setTanggalPembelian(LocalDateTime tanggalPembelian) {
-        this.tanggalPembelian = tanggalPembelian;
-    }
+    public Pelanggan getPelanggan() { return pelanggan; }
+    public void setPelanggan(Pelanggan pelanggan) { this.pelanggan = pelanggan; }
 
-    public Double getTotalHarga() {  // Make sure this returns Double
-        return totalHarga;
-    }
+    public List<DetailPembelian> getDetailPembelian() { return detailpembelian; }
+    public void setDetailPembelian(List<DetailPembelian> detailPembelian) { this.detailpembelian = detailPembelian; }
 
-    public void setTotalHarga(Double totalHarga) {  // Update setter accordingly
-        this.totalHarga = totalHarga;
-    }
-
-    public List<DetailPembelian> getDetailPembelian() {
-        return detailPembelian;
-    }
-
-    public void setDetailPembelian(List<DetailPembelian> detailPembelian) {
-        this.detailPembelian = detailPembelian;
-    }
-
-    public Pelanggan getPelanggan() {
-        return pelanggan;
-    }
-
-    public void setPelanggan(Pelanggan pelanggan) {
-        this.pelanggan = pelanggan;
+    // Binding untuk nama pelanggan
+    public StringProperty getPelangganProperty() {
+        return pelanggan != null ? new SimpleStringProperty(pelanggan.getNamaPelanggan()) : new SimpleStringProperty("Unknown");
     }
 }
-

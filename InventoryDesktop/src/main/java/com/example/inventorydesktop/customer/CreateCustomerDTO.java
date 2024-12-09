@@ -18,7 +18,6 @@ public class CreateCustomerDTO {
         this.namaPelanggan = namaPelanggan;
         this.alamat = alamat;
         this.nomorTelepon = nomorTelepon;
-
     }
 
     // Getters and Setters

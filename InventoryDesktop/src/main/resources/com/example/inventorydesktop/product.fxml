@@ -11,7 +11,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="837.0" prefWidth="1366.0" style="-fx-background-color: #EEEEEE;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventorydesktop.ProductController">
+<?import javafx.scene.image.ImageView?>
+<AnchorPane prefHeight="837.0" prefWidth="1366.0" style="-fx-background-color: #EEEEEE;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventorydesktop.product.ProductController">
     <children>
         <!-- Title Section -->
         <Label layoutX="50.0" layoutY="30.0" text="Manage Products" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
@@ -36,6 +37,7 @@
         </HBox>
 
         <!-- Modal Section -->
+        <!-- Modal Section -->
         <AnchorPane fx:id="modalPane" layoutX="300.0" layoutY="200.0" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" visible="false">
             <children>
                 <VBox alignment="CENTER" layoutX="20.0" layoutY="20.0" spacing="10.0">
@@ -44,6 +46,10 @@
                         <TextField fx:id="txtName" promptText="Product Name" />
                         <TextField fx:id="txtPrice" promptText="Product Price" />
                         <TextField fx:id="txtStock" promptText="Product Stock" />
+                        <!-- New ImgUrl Input Field -->
+                        <TextField fx:id="txtImgUrl" promptText="Product Image URL" />
+                        <!-- Image Preview Section -->
+                        <ImageView fx:id="imgPreview" fitHeight="100.0" fitWidth="100.0" preserveRatio="true" />
                         <HBox spacing="10.0">
                             <children>
                                 <Button fx:id="btnSave" text="Save" onAction="#saveProduct" />

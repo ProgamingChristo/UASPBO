@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventorydesktop.PenjualanController">
+<AnchorPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventorydesktop.penjualan.PenjualanController">
     <Pane layoutX="50.0" layoutY="100.0" prefHeight="768.0" prefWidth="1366.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="0.0">
         <Text fx:id="contentText" layoutX="69.0" layoutY="75.0" styleClass="content-text" text="Data Penjualan list" />
         <Text fx:id="contentText1" layoutX="69.0" layoutY="98.0" styleClass="date-text" text="List of data penjualan" />

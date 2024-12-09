@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -18,14 +19,23 @@ public class MainController extends Application {
     @FXML
     private StackPane contentArea;
 
+    @FXML
+    private Button btnDashboard;
+
+    @FXML
+    private Button btnAccount;
+
+    @FXML
+    private Button btnPembelian;
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), javafx.scene.layout.Region.USE_COMPUTED_SIZE, javafx.scene.layout.Region.USE_COMPUTED_SIZE);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainAdmin.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 
         stage.setMaximized(true);
         stage.setResizable(true);
@@ -34,6 +44,7 @@ public class MainController extends Application {
         stage.setScene(scene);
         stage.show();
 
+        // Simulate loading content on startup (optional)
         Platform.runLater(() -> loadContent("dashboard.fxml"));
     }
 
@@ -56,6 +67,7 @@ public class MainController extends Application {
     private void loadPembelian() {
         loadContent("pembelian.fxml");
     }
+
     @FXML
     private void loadPenjualan() {
         loadContent("penjualan.fxml");
@@ -91,18 +103,13 @@ public class MainController extends Application {
             loginStage.initStyle(StageStyle.UNDECORATED);
             loginStage.setTitle("Login");
             loginStage.setScene(loginScene);
-
             loginStage.show();
 
-            loginStage.setOnCloseRequest(event -> {
-                Platform.exit();
-            });
-
+            loginStage.setOnCloseRequest(event -> Platform.exit());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
     private void loadContent(String fxmlFile) {
         try {
@@ -114,6 +121,5 @@ public class MainController extends Application {
             e.printStackTrace();
         }
     }
-
 
 }

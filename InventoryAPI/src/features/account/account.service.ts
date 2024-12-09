@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, user_role } from '@prisma/client'; // Import the enum
 import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
@@ -17,7 +17,7 @@ export class AccountService {
   }
 
   // Create a new user
-  async createUser(newUser: { username: string; email: string; password: string }) {
+  async createUser(newUser: { username: string; email: string; password: string; role:user_role;}) {
     // Check if the email already exists
     const existingUser = await prisma.user.findUnique({
       where: { email: newUser.email },
@@ -34,12 +34,14 @@ export class AccountService {
         email: newUser.email,
         password: hashedPassword,
         refreshtoken: '', // Initial refresh token value can be empty
+        role: newUser.role , // Default to 'user' role
       },
     });
   }
 
   // Update an existing user
-  async updateUser(userId: number, updatedUser: { username?: string; email?: string; password?: string; refreshtoken?: string }) {
+  async updateUser(userId: number, updatedUser: { username?: string; email?: string; password?: string; refreshtoken?: string; role: user_role }) {
+    // If password is updated, hash it
     if (updatedUser.password) {
       updatedUser.password = await bcrypt.hash(updatedUser.password, 10);
     }

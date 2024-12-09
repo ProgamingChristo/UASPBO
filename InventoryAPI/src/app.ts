@@ -8,20 +8,19 @@ import penjualanRouter from './features/penjualan/penjualan.routes';
 import pembelianRouter from './features/pembelian/pembelian.routes';
 import authRouter from './Auth/auth.routes';
 import statistikRouter from './features/statistik/statistik.routes';
-
+import Pelangganuserrouter from './features/pelangganuser/pelangganuser.routes';
 
 const app = express();
+const port = 3030;
 
 app.use(express.json());
 app.use(cookieParser());  
-
-
 
 app.use('/api/auth', authRouter);
 
 // app.use('/api/admin', authMiddleware);
 app.use('/api/admin/users', Accountrouter);
-
+app.use('/api/pelanggan-user', Pelangganuserrouter);
 
 // kasir & admin
 app.use('/api/produk', produkRouter);
@@ -31,6 +30,6 @@ app.use('/api/pembelian', pembelianRouter);
 app.use('/api/statistik', statistikRouter);
 
 
-app.listen(3030, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log('Server is running on port 3030');
 });

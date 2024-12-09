@@ -16,11 +16,15 @@ public class Product {
     @SerializedName("stok")
     private final IntegerProperty stok;
 
-    public Product(int produkID, String namaProduk, double harga, int stok) {
+    @SerializedName("img_url")
+    private final StringProperty imgUrl;
+
+    public Product(int produkID, String namaProduk, double harga, int stok, String imgUrl) {
         this.produkID = new SimpleIntegerProperty(produkID);
         this.namaProduk = new SimpleStringProperty(namaProduk);
         this.harga = new SimpleDoubleProperty(harga);
         this.stok = new SimpleIntegerProperty(stok);
+        this.imgUrl = new SimpleStringProperty(imgUrl);
     }
 
     public int getProdukID() {
@@ -39,6 +43,10 @@ public class Product {
         return stok.get();
     }
 
+    public String getimgUrl() {
+        return imgUrl.get();
+    }
+
     public IntegerProperty produkIDProperty() {
         return produkID;
     }
@@ -53,5 +61,9 @@ public class Product {
 
     public IntegerProperty stokProperty() {
         return stok;
+    }
+
+    public StringProperty imageUrlProperty() {
+        return imgUrl;
     }
 }

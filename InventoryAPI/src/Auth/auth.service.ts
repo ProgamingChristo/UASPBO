@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { Request, Response } from 'express';
 import { User } from './auth.interface';
 
 const prisma = new PrismaClient();
@@ -21,25 +22,49 @@ export class AuthService {
     });
   }
 
-  // Login a user
-  async login(email: string, password: string): Promise<{role: string; accessToken: string; refreshToken: string } | null> {
+  async login(email: string, password: string): Promise<{ user_id: number; role: string; accessToken: string; refreshToken: string } | null> {
     const user = await prisma.user.findUnique({
       where: { email },
     });
-
-    if (!user) return null;
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) return null;
-
-    const accessToken = jwt.sign({ userId: user.user_id }, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: '15m' });
-    const refreshToken = jwt.sign({ userId: user.user_id }, process.env.REFRESH_TOKEN_SECRET!, { expiresIn: '7d' });
-
-    return {  role: user.role,  accessToken, refreshToken };
-  }
-
-  async logout(refreshToken: string): Promise<void> {
   
+    if (!user) return null;
+  
+    // Validate password
+    const isHashedPasswordValid = await bcrypt.compare(password, user.password); // Check if the hashed password matches
+    const isPlaintextPasswordValid = password === user.password; // Check if the password matches exactly (plaintext)
+  
+    // Continue only if either validation is successful
+    if (!isHashedPasswordValid && !isPlaintextPasswordValid) return null;
+  
+    // Generate new refresh token
+    const newRefreshToken = jwt.sign({ userId: user.user_id }, process.env.REFRESH_TOKEN_SECRET!, { expiresIn: '7d' });
+  
+    // Update the user's refresh token in the database
+    await prisma.user.update({
+      where: { email },
+      data: { refreshtoken: newRefreshToken },  
+    });
+  
+    // Generate access token
+    const accessToken = jwt.sign({ userId: user.user_id }, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: '15m' });
+  
+    // Return user data along with access and refresh tokens
+    return { user_id: user.user_id, role: user.role, accessToken, refreshToken: newRefreshToken };
+  }
+  
+  
+  async logout(req: Request, res: Response): Promise<void> {
+    try {
+      // Clear the refreshToken cookie
+      res.clearCookie('refreshToken', { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+
+      // Clear the Authorization header if it exists
+      res.setHeader('Authorization', '');
+
+      res.status(200).json({ message: 'Logged out successfully' });
+    } catch (error) {
+      res.status(400).json({ error: error instanceof Error ? error.message : 'Unknown error occurred' });
+    }
   }
 
   // Verify refresh token
@@ -50,15 +75,14 @@ export class AuthService {
     } catch (error) {
       return null;
     }
-    
   }
 
-  async getSession(token: string) {
+  async getSession(refreshToken: string) {
     try {
-      // Verifikasi token JWT
-      const decoded: any = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET!);
+      // Verify the refresh token
+      const decoded: any = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!);
   
-      // Ambil user berdasarkan userId yang ada di dalam token
+      // Get user based on userId in the decoded token
       const user = await prisma.user.findUnique({
         where: { user_id: decoded.userId },
       });
@@ -67,16 +91,14 @@ export class AuthService {
         throw new Error('User not found');
       }
   
-      // Mengembalikan data pengguna
+      // Return user data
       return {
         userId: user.user_id,
         username: user.username,
         email: user.email,
-        // Tambahkan data lainnya sesuai dengan skema user Anda
       };
     } catch (error) {
       throw new Error('Invalid or expired token');
     }
   }
-  
 }

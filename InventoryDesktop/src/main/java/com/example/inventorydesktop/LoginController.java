@@ -2,6 +2,7 @@ package com.example.inventorydesktop;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -29,6 +30,8 @@ public class LoginController extends Application {
     private String accessToken;
     private String refreshToken;
 
+    private String role; // Role of the logged-in user
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("login.fxml"));
@@ -40,7 +43,6 @@ public class LoginController extends Application {
         stage.setTitle("Inventory Application");
         stage.setScene(scene);
         stage.show();
-
     }
 
     @FXML
@@ -55,27 +57,56 @@ public class LoginController extends Application {
 
         try {
             String response = loginUser(email, password);
+
             if (response != null) {
                 JSONObject jsonResponse = new JSONObject(response);
 
-                // Extract tokens and role
-                accessToken = jsonResponse.getString("accessToken");
-                refreshToken = jsonResponse.getString("refreshToken");
-                String role = jsonResponse.getString("role");
+                // Periksa jika ada error pada respons
+                if (jsonResponse.has("error")) {
+                    String errorMessage = jsonResponse.getString("error");
+                    showAlert("Login Failed", errorMessage, AlertType.ERROR);
+                    return;
+                }
 
-                // Handle login success based on role
-                showAlert("Login Success", "Welcome, " + role + "!", AlertType.INFORMATION);
-                loadMainScreen(); // Proceed to main screen
+                // Extract tokens dan role
+                accessToken = jsonResponse.optString("accessToken", null);
+                refreshToken = jsonResponse.optString("refreshToken", null);
+                role = jsonResponse.optString("role", null);
+
+                // Validasi jika token atau role hilang
+                if (accessToken == null || refreshToken == null || role == null) {
+                    showAlert("Login Error", "Invalid server response. Missing required data.", AlertType.ERROR);
+                    return;
+                }
+
+                // Cek jika role adalah 'user', maka login tidak diterima
+                if ("user".equalsIgnoreCase(role)) {
+                    showAlert("Login Failed", "Your account does not have the required permissions.", AlertType.ERROR);
+                    return;
+                }
+
+                // Login sukses untuk admin atau kasir
+                showAlert("Login Success", "Welcome, " + role + email + "!", AlertType.INFORMATION);
+                loadMainScreen();
             } else {
                 showAlert("Login Failed", "Invalid email or password.", AlertType.ERROR);
             }
         } catch (IOException e) {
-            showAlert("Network Error", "Unable to connect to the server. Please try again.", AlertType.ERROR);
+            // Tangani kesalahan koneksi
+            showAlert("Network Error", "Invalid Credentials.", AlertType.ERROR);
+        } catch (Exception e) {
+            // Tangani kesalahan tidak terduga
+            showAlert("Unexpected Error", "An unexpected error occurred: " + e.getMessage(), AlertType.ERROR);
         }
     }
 
+    private boolean isValidRole(String role) {
+        // Define valid roles
+        return "admin".equalsIgnoreCase(role) || "kasir".equalsIgnoreCase(role);
+    }
+
     private String loginUser(String email, String password) throws IOException {
-        String apiUrl = "http://localhost:3030/api/auth/login";
+        String apiUrl = BaseApiConfig.getBaseUrl() + "api/auth/login";
         HttpURLConnection connection = null;
 
         try {
@@ -124,9 +155,24 @@ public class LoginController extends Application {
 
     private void loadMainScreen() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main.fxml"));
+            FXMLLoader fxmlLoader;
+            if ("admin".equalsIgnoreCase(role)) {
+                fxmlLoader = new FXMLLoader(getClass().getResource("mainAdmin.fxml"));
+            } else if ("kasir".equalsIgnoreCase(role)) {
+                fxmlLoader = new FXMLLoader(getClass().getResource("mainKasir.fxml"));
+            } else {
+                showAlert("Error", "Unknown role: " + role, AlertType.ERROR);
+                return;
+            }
+
+            Parent root = fxmlLoader.load();
+
+            // Optional: Pass role information to the controller
+            MainController mainController = fxmlLoader.getController();
+            // mainController.setRole(role); // Uncomment if MainController has a setRole method
+
             Stage stage = new Stage();
-            Scene scene = new Scene(fxmlLoader.load());
+            Scene scene = new Scene(root);
             stage.setMaximized(true);
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("Inventory Application - Dashboard");
@@ -140,6 +186,8 @@ public class LoginController extends Application {
             showAlert("Error", "Unable to load main screen.", AlertType.ERROR);
         }
     }
+
+
 
     public static void main(String[] args) {
         launch();

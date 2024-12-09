@@ -3,20 +3,20 @@ package com.example.inventorydesktop.product;
 import com.google.gson.annotations.SerializedName;
 
 public class UpdateProductDTO {
-
     @SerializedName("namaProduk")
     private String namaProduk;
-
     @SerializedName("harga")
     private double harga;
-
     @SerializedName("stok")
     private int stok;
+    @SerializedName("imgUrl")
+    private String imgUrl;
 
-    public UpdateProductDTO(String namaProduk, double harga, int stok) {
+    public UpdateProductDTO(String namaProduk, double harga, int stok, String imgUrl) {
         this.namaProduk = namaProduk;
         this.harga = harga;
         this.stok = stok;
+        this.imgUrl = imgUrl;
     }
 
     public String getNamaProduk() {
@@ -41,5 +41,13 @@ public class UpdateProductDTO {
 
     public void setStok(int stok) {
         this.stok = stok;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

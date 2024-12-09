@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1366.0" stylesheets="@../../../css/main-styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventorydesktop.MainController">
+
+    <StackPane fx:id="contentArea" styleClass="content-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Text fx:id="contentText" text="Welcome to the Dashboard Admin!" />
+    </StackPane>
+
+    <!-- Sidebar Section -->
+    <VBox fx:id="sidebar" prefWidth="220" spacing="20.0" styleClass="sidebar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0">
+
+        <!-- Header Label -->
+        <Label layoutX="62.0" layoutY="26.0" prefHeight="30.0" prefWidth="149.0" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 20px 0px 10px 0px;" text="Inventory App" />
+
+        <!-- Buttons Section with Icons -->
+        <VBox fx:id="menuButtons" spacing="10.0">
+            <Button fx:id="btnDashboard" onAction="#loadHome" styleClass="menu-button" text="Dashboard">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="mdi-view-dashboard" iconSize="20" />
+                </graphic>
+            </Button>
+            <Button fx:id="productButton" onAction="#loadProduct" styleClass="menu-button" text="Product">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="mdi-shopping" iconSize="20" />
+                </graphic>
+            </Button>
+            <Button fx:id="customerButton" onAction="#loadCustomer" styleClass="menu-button" text="Customer">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="mdi-account-star-variant" iconSize="20" />
+                </graphic>
+            </Button>
+            <Button fx:id="penjualanButton" onAction="#loadPenjualan" styleClass="menu-button" text="Penjualan">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="mdi-square-inc-cash" iconSize="20" />
+                </graphic>
+            </Button>
+            <Button fx:id="btnAccount" onAction="#loadAccount" styleClass="menu-button" text="Account">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="mdi-account" iconSize="20" />
+                </graphic>
+            </Button>
+        </VBox>
+
+        <!-- Spacer to push the bottom section -->
+        <VBox fx:id="spacer" VBox.vgrow="always" />
+
+        <!-- Bottom Section with Logout Button -->
+        <VBox fx:id="bottomSection" spacing="10" styleClass="bottom-section" AnchorPane.bottomAnchor="20.0">
+            <Button fx:id="logoutIconButton" onAction="#logout" styleClass="icon-button" text="Logout">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="mdi-logout" iconSize="20" />
+                </graphic>
+            </Button>
+        </VBox>
+    </VBox>
+
+</AnchorPane>

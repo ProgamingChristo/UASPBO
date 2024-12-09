@@ -15,20 +15,8 @@ public class ProductDTO {
     @SerializedName("Stok")
     private int stok;
 
-    // Constructor untuk pembuatan produk baru (tanpa ProdukID)
-    public ProductDTO(String namaProduk, double harga, int stok) {
-        this.namaProduk = namaProduk;
-        this.harga = harga;
-        this.stok = stok;
-    }
-
-    // Constructor untuk update produk (dengan ProdukID)
-    public ProductDTO(int produkID, String namaProduk, double harga, int stok) {
-        this.produkID = produkID;
-        this.namaProduk = namaProduk;
-        this.harga = harga;
-        this.stok = stok;
-    }
+    @SerializedName("img_url")
+    private String img;
 
     // Getters dan Setters
     public int getProdukID() {
@@ -61,5 +49,13 @@ public class ProductDTO {
 
     public void setStok(int stok) {
         this.stok = stok;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

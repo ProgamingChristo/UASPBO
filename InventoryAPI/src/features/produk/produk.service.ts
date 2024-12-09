@@ -15,24 +15,51 @@ export class ProdukService {
     });
   }
 
-  // Create a new product
-  async createProduk(newProduk: { NamaProduk: string; Harga: number; Stok: number }) {
+  async createProduk(newProduk: { NamaProduk: string; Harga: number; Stok: number; ImgUrl: string }) {
     return prisma.produk.create({
       data: {
         NamaProduk: newProduk.NamaProduk,
         Harga: newProduk.Harga,
         Stok: newProduk.Stok,
+        img_url: newProduk.ImgUrl,  
       },
     });
   }
+  
 
-  // Update an existing product
-  async updateProduk(produkId: number, updatedProduk: { NamaProduk?: string; Harga?: number; Stok?: number }) {
+  async updateProduk(produkId: number, updatedProduk: { NamaProduk?: string; Harga?: number; Stok?: number; ImgUrl?: string }) {
+    // // Log input data
+    // console.log("Updated Produk Data:", updatedProduk);
+  
+    const produk = await prisma.produk.findUnique({
+      where: { ProdukID: produkId },
+    });
+  
+    if (!produk) {
+      throw new Error('Product not found');
+    }
+  
+    const dataToUpdate: any = {
+      NamaProduk: updatedProduk.NamaProduk,
+      Harga: updatedProduk.Harga,
+      Stok: updatedProduk.Stok,
+    };
+  
+    if (updatedProduk.ImgUrl) {
+      dataToUpdate.img_url = updatedProduk.ImgUrl; // Ensure this matches the column name in your DB
+    }
+  
+    // // Log data before update
+    // console.log("Data to update:", dataToUpdate);
+  
     return prisma.produk.update({
       where: { ProdukID: produkId },
-      data: updatedProduk,
+      data: dataToUpdate,
     });
   }
+  
+
+
 
   // Delete a product
   async deleteProduk(id: number): Promise<boolean> {

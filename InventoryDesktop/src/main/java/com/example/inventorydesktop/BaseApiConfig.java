@@ -8,7 +8,4 @@ public class BaseApiConfig {
         return BASE_URL;
     }
 
-//    public static String getProductionUrl() {
-//        return "http://production-server.com/";
-//    }
 }

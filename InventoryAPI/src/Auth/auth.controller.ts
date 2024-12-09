@@ -25,6 +25,8 @@ export class AuthController {
     try {
       const tokens = await this.authService.login(email, password);
       if (tokens) {
+        // Set the refreshToken in the cookie
+        res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 7 * 24 * 60 * 60 * 1000 }); // 7 days
         res.status(200).json(tokens);
       } else {
         res.status(401).json({ error: 'Invalid credentials' });
@@ -36,36 +38,29 @@ export class AuthController {
 
   // Logout route
   async logout(req: Request, res: Response): Promise<void> {
-    const { refreshToken } = req.body;
     try {
-      await this.authService.logout(refreshToken);
+      res.clearCookie('refreshToken'); // Clear the refreshToken cookie
       res.status(200).json({ message: 'Logged out successfully' });
     } catch (error) {
       res.status(400).json({ error: error instanceof Error ? error.message : 'Unknown error occurred' });
     }
   }
 
+  // Get Session route (Reads refreshToken from cookies)
   async getSession(req: Request, res: Response): Promise<Response> {
-    const token = req.headers['authorization']?.split(' ')[1]; // Ambil token dari header Authorization
-
-    // Jika token tidak ada, kembalikan error
-    if (!token) {
-      return res.status(400).json({ error: 'Token is required' });
+    const refreshToken = req.cookies.refreshToken; // Retrieve the refreshToken from cookies
+  
+    if (!refreshToken) {
+      return res.status(400).json({ error: 'Refresh token is required' });
     }
-
+  
     try {
-      // Mendapatkan data pengguna berdasarkan token yang diberikan
-      const userData = await this.authService.getSession(token);
-
-      // Jika berhasil, kirimkan data pengguna dalam respons
+      const userData = await this.authService.getSession(refreshToken);
       return res.status(200).json({ user: userData });
     } catch (error) {
-      // Menangani error jika token tidak valid atau expired
       return res.status(401).json({
         error: error instanceof Error ? error.message : 'Unknown error occurred'
       });
     }
   }
-
-  
 }

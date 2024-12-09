@@ -36,23 +36,23 @@ export class ProdukController {
     }
   }
 
-  // Create a new product
   async createProduk(req: Request, res: Response): Promise<void> {
     try {
       const newProduk: CreateProdukDto = req.body;
-
+  
       // Normalizing input field names
       const normalizedProduk = {
         NamaProduk: newProduk.namaProduk,
         Harga: newProduk.harga,
         Stok: newProduk.stok,
+        ImgUrl: newProduk.imgUrl || "https://placehold.co/150x145", 
       };
-
+  
       // Validasi input
       if (!normalizedProduk.NamaProduk || !normalizedProduk.Harga || !normalizedProduk.Stok) {
         throw new Error("Missing required fields");
       }
-
+  
       const result = await this.produkService.createProduk(normalizedProduk);
       res.status(201).json(result);
     } catch (error) {
@@ -60,6 +60,7 @@ export class ProdukController {
       res.status(400).json({ error: message });
     }
   }
+  
 
   // Update an existing product
   async updateProduk(req: Request, res: Response): Promise<void> {
@@ -67,11 +68,12 @@ export class ProdukController {
     try {
       const updatedProduk: UpdateProdukDto = req.body;
 
-      // Normalizing input field names
+      // Normalize input field names
       const normalizedUpdatedProduk = {
         NamaProduk: updatedProduk.namaProduk,
         Harga: updatedProduk.harga,
         Stok: updatedProduk.stok,
+        ImgUrl: updatedProduk.imgUrl || undefined,  // Ensure imgUrl is only set if provided
       };
 
       const result = await this.produkService.updateProduk(produkId, normalizedUpdatedProduk);
@@ -85,6 +87,7 @@ export class ProdukController {
       res.status(400).json({ error: message });
     }
   }
+ 
 
   // Delete a product
   async deleteProduk(req: Request, res: Response): Promise<void> {

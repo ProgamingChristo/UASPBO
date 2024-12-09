@@ -5,6 +5,13 @@ export class PembelianService {
   // Get all pembelian
   async getAllPembelian() {
     return prisma.pembelian.findMany({
+      where: {
+        NOT: {
+          status: {
+            in: ['accepted', 'rejected']
+          }
+        }
+      },
       include: {
         detailpembelian: {
           include: {
@@ -77,7 +84,7 @@ export class PembelianService {
   }
 
   // Update pembelian
-  async updatePembelian(pembelianId: number, updatedPembelian: { TotalHarga?: number; PelangganID?: number }) {
+  async updatePembelian(pembelianId: number, updatedPembelian: { TotalHarga?: number; PelangganID?: number; status?: 'accepted' | 'rejected' }) {
     try {
       const existingPembelian = await prisma.pembelian.findUnique({
         where: { pembelianID: pembelianId }
@@ -85,6 +92,11 @@ export class PembelianService {
 
       if (!existingPembelian) {
         throw new Error(`Pembelian with ID ${pembelianId} not found`);
+      }
+
+      // Check if status is provided, and if it's a valid status
+      if (updatedPembelian.status && !['accepted', 'rejected', 'pending'].includes(updatedPembelian.status)) {
+        throw new Error('Invalid status value');
       }
 
       const updatedResult = await prisma.pembelian.update({
@@ -107,7 +119,8 @@ export class PembelianService {
 
       return updatedResult;
     } catch (error) {
-      throw new Error('Error occurred while updating pembelian');
+      throw new Error(error instanceof Error ? error.message : 'Unknown error occurred while updating');
     }
   }
+
 }

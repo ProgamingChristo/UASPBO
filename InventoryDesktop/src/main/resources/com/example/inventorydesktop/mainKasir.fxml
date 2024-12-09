@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1366.0" stylesheets="@../../../css/main-styles.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.inventorydesktop.MainController">
+
+    <StackPane fx:id="contentArea" styleClass="content-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Text fx:id="contentText" text="Welcome to the Dashboard!" />
+    </StackPane>
+
+    <VBox fx:id="sidebar" prefWidth="200" spacing="20.0" styleClass="sidebar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0">
+        <GridPane fx:id="mainLayout" hgap="20" styleClass="main-layout" vgap="20" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="80.0">
+            <VBox spacing="10" styleClass="button-group">
+                <Label layoutX="62.0" layoutY="26.0" prefHeight="30.0" prefWidth="149.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Inventory App {}" textOverrun="CLIP" />
+
+                <Button fx:id="productButton" alignment="TOP_LEFT" onAction="#loadProduct" styleClass="menu-button" text="Product">
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="mdi-shopping" iconSize="20" />
+                    </graphic>
+                </Button>
+                <Button fx:id="customerButton" alignment="TOP_LEFT" onAction="#loadCustomer" styleClass="menu-button" text="Customer">
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="mdi-account-star-variant" iconSize="20" />
+                    </graphic>
+                </Button>
+                <Button fx:id="btnPembelian" alignment="TOP_LEFT" onAction="#loadPembelian" styleClass="menu-button" text="Pembelian">
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="mdi-cart" iconSize="20" />
+                    </graphic>
+                </Button>
+                <Button fx:id="penjualanButton" alignment="TOP_LEFT" onAction="#loadPenjualan" styleClass="menu-button" text="Penjualan">
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="mdi-square-inc-cash" iconSize="20" />
+                    </graphic>
+                </Button>
+            </VBox>
+         <columnConstraints>
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+         </rowConstraints>
+
+        </GridPane>
+
+        <VBox fx:id="spacer" VBox.vgrow="always" />
+
+        <VBox fx:id="bottomSection" spacing="10" styleClass="bottom-section">
+            <Button fx:id="logoutIconButton" onAction="#logout" styleClass="icon-button" text="Logout">
+                <graphic>
+                    <FontIcon iconColor="WHITE" iconLiteral="mdi-logout" iconSize="14" />
+                </graphic>
+            </Button>
+        </VBox>
+    </VBox>
+</AnchorPane>

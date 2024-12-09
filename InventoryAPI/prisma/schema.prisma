@@ -8,12 +8,13 @@ datasource db {
 }
 
 model pelanggan {
-  PelangganID   Int         @id @default(autoincrement())
-  NamaPelanggan String      @db.VarChar(255)
-  Alamat        String      @db.Text
-  NomorTelepon  String      @db.VarChar(15)
-  pembelian     pembelian[]
-  penjualan     penjualan[]
+  PelangganID    Int              @id @default(autoincrement())
+  NamaPelanggan  String           @db.VarChar(255)
+  Alamat         String           @db.Text
+  NomorTelepon   String           @db.VarChar(15)
+  pelanggan_user pelanggan_user[]
+  pembelian      pembelian[]
+  penjualan      penjualan[]
 }
 
 model produk {
@@ -21,6 +22,7 @@ model produk {
   NamaProduk      String            @db.VarChar(255)
   Harga           Decimal           @db.Decimal(10, 2)
   Stok            Int
+  img_url         String            @default("https://placehold.co/150x145") @db.Text
   detailpembelian detailpembelian[]
   detailpenjualan detailpenjualan[]
 }
@@ -54,6 +56,7 @@ model pembelian {
   Tanggalpembelian DateTime
   TotalHarga       Decimal           @db.Decimal(10, 2)
   PelangganID      Int
+  status           pembelian_status  @default(pending)
   detailpembelian  detailpembelian[]
   pelanggan        pelanggan         @relation(fields: [PelangganID], references: [PelangganID], map: "pembelian_PelangganID_fkey")
 
@@ -74,16 +77,34 @@ model detailpembelian {
 }
 
 model user {
-  user_id      Int       @id @default(autoincrement())
-  username     String    @db.Char(25)
-  email        String    @unique(map: "uniq email") @db.Char(25)
-  password     String    @db.VarChar(255)
-  role         user_role @default(user)
-  refreshtoken String    @db.Text
+  user_id        Int              @id @default(autoincrement())
+  username       String           @db.Char(25)
+  email          String           @unique(map: "uniq email") @db.Char(25)
+  password       String           @db.VarChar(255)
+  refreshtoken   String           @db.Text
+  role           user_role        @default(user)
+  pelanggan_user pelanggan_user[]
+}
+
+model pelanggan_user {
+  pelangganUserID Int       @id @default(autoincrement())
+  PelangganID     Int
+  user_id         Int
+  pelanggan       pelanggan @relation(fields: [PelangganID], references: [PelangganID], onUpdate: Restrict, map: "pelanggan_user_ibfk_1")
+  user            user      @relation(fields: [user_id], references: [user_id], onUpdate: Restrict, map: "pelanggan_user_ibfk_2")
+
+  @@index([PelangganID], map: "PelangganID")
+  @@index([user_id], map: "user_id")
 }
 
 enum user_role {
   user
   kasir
   admin
+}
+
+enum pembelian_status {
+  pending
+  accepted
+  rejected
 }

@@ -1,5 +1,6 @@
 export interface CreatePenjualanDto {
   pelangganID: number;
+  TotalHarga: number;  
   detailPenjualan: Array<{
     ProdukID: number;
     JumlahProduk: number;
@@ -8,6 +9,6 @@ export interface CreatePenjualanDto {
 }
 
 export interface UpdatePenjualanDto {
-  TotalHarga?: number;
+  TotalHarga?: number;  
   PelangganID?: number;
 }

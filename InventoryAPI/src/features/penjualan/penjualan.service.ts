@@ -41,17 +41,17 @@ export class PenjualanService {
     });
   }
 
-  // Create a new penjualan
-  async createPenjualan(newPenjualan: { pelangganID: number; detailPenjualan: Array<{ ProdukID: number; JumlahProduk: number; Subtotal: number }> }) {
-    const totalHarga = newPenjualan.detailPenjualan.reduce((acc, detail) => {
-      if (detail.Subtotal <= 0) throw new Error('Subtotal must be greater than zero');
-      return acc + detail.Subtotal;
-    }, 0);
+   // Create a new penjualan
+   async createPenjualan(newPenjualan: { pelangganID: number; detailPenjualan: Array<{ ProdukID: number; JumlahProduk: number; Subtotal: number }>; TotalHarga: number }) {
+    // Validate TotalHarga input
+    if (newPenjualan.TotalHarga <= 0) {
+      throw new Error('TotalHarga must be greater than zero');
+    }
 
     const createdPenjualan = await prisma.penjualan.create({
       data: {
         TanggalPenjualan: new Date(),
-        TotalHarga: totalHarga,
+        TotalHarga: newPenjualan.TotalHarga, 
         PelangganID: newPenjualan.pelangganID,
         detailpenjualan: {
           create: newPenjualan.detailPenjualan.map((detail) => ({
@@ -88,6 +88,11 @@ export class PenjualanService {
 
       if (!existingPenjualan) {
         throw new Error(`Penjualan with ID ${penjualanId} not found`);
+      }
+
+      // If TotalHarga is provided, validate it
+      if (updatedPenjualan.TotalHarga && updatedPenjualan.TotalHarga <= 0) {
+        throw new Error('TotalHarga must be greater than zero');
       }
 
       const updatedResult = await prisma.penjualan.update({

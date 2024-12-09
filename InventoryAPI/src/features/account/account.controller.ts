@@ -45,6 +45,7 @@ export class AccountController {
         username: newUser.username,
         email: newUser.email,
         password: newUser.password,
+        role: newUser.role,
       };
 
       // Check if necessary fields are provided
@@ -72,6 +73,7 @@ export class AccountController {
         email: updatedUser.email,
         password: updatedUser.password,
         refreshtoken: updatedUser.refreshtoken,
+        role: updatedUser.role || 'user', 
       };
 
       const result = await this.accountService.updateUser(userId, normalizedUpdatedUser);
